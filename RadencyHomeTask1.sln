@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadencyHomeTask1", "Radency
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{37EB325D-58BB-4B59-882E-8DB65B24BFCB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{9E6AA8CC-7AC4-407C-BF72-695B179821C5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{37EB325D-58BB-4B59-882E-8DB65B24BFCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37EB325D-58BB-4B59-882E-8DB65B24BFCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37EB325D-58BB-4B59-882E-8DB65B24BFCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E6AA8CC-7AC4-407C-BF72-695B179821C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E6AA8CC-7AC4-407C-BF72-695B179821C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E6AA8CC-7AC4-407C-BF72-695B179821C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E6AA8CC-7AC4-407C-BF72-695B179821C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
