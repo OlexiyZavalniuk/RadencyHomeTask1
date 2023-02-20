@@ -19,21 +19,22 @@ namespace Services
 			_totalLines = 0;
 		}
 
-		public void ProcessFile(string file)
+		public void ProcessFile(string readFile, string writeFile, string logFile)
 		{
-			var fileInfo = new FileInfo(file);
+			var fileInfo = new FileInfo(readFile);
 
 			if (fileInfo.Extension != ".cvs" && fileInfo.Extension != ".txt")
 			{
-				_invalidFiles.Add(file);
+				_invalidFiles.Add(readFile);
+				updateLog(logFile);
 				return;
 			}
 
 			var skipFirstLine = fileInfo.Extension == ".cvs" ? true : false;
 
-			foreach (var line in File.ReadLines(file))
+			foreach (var line in File.ReadLines(readFile))
 			{
-				_totalLines++;
+
 
 				// якщо формат .cvs, то пропускаємо перший рядок із заголовками
 				if (skipFirstLine)
@@ -42,11 +43,12 @@ namespace Services
 					continue;
 				}
 
+				_totalLines++;
 				processLine(line);
 			}
 
-			saveResult("");
-			updateLog("");
+			saveResult(writeFile);
+			updateLog(logFile);
 			_data.Clear();
 			_errorLines = 0;
 			_totalLines = 0;
@@ -75,7 +77,7 @@ namespace Services
 					$"parsed_files: {++parsed_files}",
 					$"parsed_lines: {parsed_lines + _totalLines}",
 					$"found_errors: {found_errors + _errorLines}",
-					$"invalid_files: {_invalidFiles}");
+					$"invalid_files: {string.Join(", ", _invalidFiles.ToArray())}");
 
 				using var writer = new StreamWriter(file, false);
 				writer.WriteLine(toWrite);
@@ -86,7 +88,7 @@ namespace Services
 					$"parsed_files: 1",
 					$"parsed_lines: {_totalLines}",
 					$"found_errors: {_errorLines}",
-					$"invalid_files: {_invalidFiles}");
+					$"invalid_files: {string.Join(", ", _invalidFiles.ToArray())}");
 
 				using var writer = new StreamWriter(file, false);
 				writer.WriteLine(toWrite);
