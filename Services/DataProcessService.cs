@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace Services
 {
-	public class DataProcessService
+	public class DataProcessService : IDataProcessService
 	{
 		private List<Data> _data;
 		private List<string> _invalidFiles;
@@ -19,7 +19,7 @@ namespace Services
 			_totalLines = 0;
 		}
 
-		public void ProcessFile(string readFile, string writeFile, string logFile)
+		public void ProcessFile(string readFile, string logFile)
 		{
 			var fileInfo = new FileInfo(readFile);
 
@@ -47,11 +47,18 @@ namespace Services
 				processLine(line);
 			}
 
-			saveResult(writeFile);
 			updateLog(logFile);
-			_data.Clear();
 			_errorLines = 0;
 			_totalLines = 0;
+		}
+
+		public void EndProcessing(string writeFile)
+		{
+			if (_data.Count > 0 )
+			{
+				saveResult(writeFile);
+				_data.Clear();
+			}
 		}
 
 		private void saveResult(string file)
@@ -62,7 +69,7 @@ namespace Services
 			writer.WriteLine(json);
 		}
 
-		public void updateLog(string file)
+		private void updateLog(string file)
 		{
 			try
 			{
@@ -90,6 +97,7 @@ namespace Services
 					$"found_errors: {_errorLines}",
 					$"invalid_files: {string.Join(", ", _invalidFiles.ToArray())}");
 
+				File.Create(file).Close();
 				using var writer = new StreamWriter(file, false);
 				writer.WriteLine(toWrite);
 			}
